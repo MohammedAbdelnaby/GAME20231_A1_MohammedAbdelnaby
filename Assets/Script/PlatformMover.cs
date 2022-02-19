@@ -23,16 +23,17 @@ public class PlatformMover : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
+    {
+        PlatformManger.Instance.DestoryObj();
+        Move();
+    }
+
+    public void Move()
     {
         if (start)
         {
             transform.position += new Vector3(0.0f, -(speed * Time.fixedDeltaTime), 0.0f);
-        }
-        if (transform.position.y <= -5.45f)
-        {
-            Destroy(this.gameObject);
         }
     }
 }

@@ -10,7 +10,6 @@ public class PlayerControl : MonoBehaviour
     public float speed = 2.0f;
     public float jumpForce = 10.0f;
     public GameObject platform;
-    public float spawnMaxTimer = 4.0f;
     public int FruitScore = 0;
     //private
     private Rigidbody2D rigidbody;
@@ -77,8 +76,6 @@ public class PlayerControl : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-
-
         if (collision.gameObject.tag == "Platform" && transform.position.y >= (collision.transform.position.y + collision.gameObject.GetComponent<BoxCollider2D>().size.y / 2))
         {
             startGame = true;
@@ -102,31 +99,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (startGame)
         {
-            SpawnTimer -= Time.deltaTime;
-            if (SpawnTimer <= 0.0f)
-            {
-                int spawnPoint = Random.Range(1, 4);
-                if (spawnPoint == 1)
-                {
-                    GameObject Platform = Instantiate(platform);
-                    platform.transform.position = new Vector3(-2.0f, 5.0f, 0.0f);
-                }
-                else if (spawnPoint == 2)
-                {
-                    GameObject Platform = Instantiate(platform);
-                    platform.transform.position = new Vector3(0.0f, 5.0f, 0.0f);
-                }
-                else if (spawnPoint == 3)
-                {
-                    GameObject Platform = Instantiate(platform);
-                    platform.transform.position = new Vector3(2.0f, 5.0f, 0.0f);
-                }
-                else
-                {
-                    return;
-                }
-                SpawnTimer = spawnMaxTimer;
-            }
+            PlatformManger.Instance.spawn();
         }
     }
 
